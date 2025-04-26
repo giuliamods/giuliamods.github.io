@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giulia Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#2c2c2c] text-gray-100 font-sans">
+  <div class="flex h-screen">
+    <aside class="w-60 bg-[#333333] p-4 flex flex-col justify-between">
+      <div>
+        <h1 class="text-xl font-bold mb-6">Giulia Store</h1>
+        <nav class="space-y-2">
+          <a href="#" class="flex items-center gap-2 px-2 py-2 rounded-lg bg-[#3d3d3d] card-inicial app-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1040/1040224.png" alt="Explore Icon" class="w-5 h-5">
+            Explorar 
+          </a>
+        </nav>
+      </div>
+      <div>
+        <style>
+          body, aside, input, .app-card, .featured-section {
+           transition: background-color 0.5s, color 0.5s transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+           will-change: transform;
+          }
+
+          body.light {
+            background-color: #f2f2f2;
+            color: #1a1a1a;
+          }
+          body.light aside {
+            background-color: #e6e6e6;
+          }
+          body.light input {
+            background-color: #dddddd;
+            color: #1a1a1a;
+          }
+          body.light .app-card {
+            background-color: #eeeeee;
+            color: #1a1a1a;
+          }
+          body.light .featured-section {
+            background: linear-gradient(135deg, #ff7e00, #ff4da6, #b266ff);
+          }
+          body.light #next-screen {
+          background-color: #f2f2f2;
+          color: #1a1a1a;
+        }
+
+        body.light #next-screen h1,
+        body.light #next-screen h2,
+        body.light #next-screen p,
+        body.light #next-screen select {
+          color: #1a1a1a;
+        }
+
+        body.light #next-screen .app-card {
+          background-color: #eeeeee;
+          color: #1a1a1a;
+        }
+
+        body.light #next-screen select {
+          background-color: #dddddd;
+        }
+
+        body.light #next-screen option {
+          background-color: #dddddd;
+          color: #1a1a1a;
+        }
+        </style>
+        
+        
+        <button class="bg-[#3d3d3d] text-gray-200 px-2 py-2 rounded-full transition app-card" id="theme-button">
+          <img 
+            src="https://static-00.iconduck.com/assets.00/moon-icon-512x512-fm9crgpt.png" 
+            class="w-5 h-5 invert transition-all duration-500 ease-in-out" 
+            id="theme-image">
+        </button>
+        
+        <script>
+          const button = document.getElementById('theme-button');
+          const image = document.getElementById('theme-image');
+          const body = document.body;
+          let isDark = true;
+        
+          button.addEventListener('click', () => {
+            image.classList.add('opacity-0');
+        
+            setTimeout(() => {
+              if (isDark) {
+                body.classList.add('light');
+                image.src = "claro.png"; 
+                isDark = false;
+              } else {
+                body.classList.remove('light');
+                image.src = "https://static-00.iconduck.com/assets.00/moon-icon-512x512-fm9crgpt.png";
+                image.classList.add('invert');
+                isDark = true;
+              }
+              
+              image.classList.remove('opacity-0');
+            }, 300);
+          });
+          if (localStorage.getItem('theme') === 'light') {
+                setLightTheme();
+              } 
+              else {
+                setDarkTheme();
+              }
+        
+        </script>
+        
+
+
+
+        
+      </div>
+    </aside>
+
+    
+    <main class="flex-1 p-6 overflow-y-auto">
+      
+      <div class="flex items-center justify-center mb-6">
+         
+      </div>
+
+      
+      <div class="bg-gradient-to-r from-indigo-700  via-purple-700 to-green-600 rounded-xl p-6 mb-8 text-center justify-center featured-section">
+        <h2 class="text-2xl font-bold mb-4">O que há de novo?</h2>
+      </div>
+      
+
+      <div class="relative w-full h-full overflow-hidden" id="app-wrapper">
+        
+        <section id="apps-section" class="absolute inset-0 grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-min grid-flow-dense transition-transform duration-500 z-10">
+          
+          <button class="bg-[#333333] p-4 rounded-lg flex items-start gap-4 card-inicial app-card w-full h-40" id="saee">
+            <img src="https://img.gta5-mods.com/q75/images/gta-san-andreas-loading-theme/5f42d6-1024x1024bb.jpg" alt="Mumble Icon" class="w-16 h-16 rounded-md object-cover">
+            <div>
+              <h3 class="font-semibold text-lg">SA E&E by giulia</h3>
+              <p class="text-sm text-gray-400">Multiplayer, Singleplayer, ENB, Mods</p>
+            </div>
+          </button>
+      
+          <div class="bg-[#333333] p-4 rounded-lg app-card w-full h-40 flex flex-col justify-between">
+            <div>
+              <h3 class="font-semibold text-lg">VC E&E by giulia</h3>
+              <p class="text-sm text-gray-400">ENB</p>
+            </div>
+            <p class="text-xs text-red-400">(Indisponível)</p>
+          </div>
+      
+          <div class="bg-[#333333] p-4 rounded-lg app-card w-full h-40 flex flex-col justify-between">
+            <div>
+              <h3 class="font-semibold text-lg">III E&E by giulia</h3>
+              <p class="text-sm text-gray-400">ENB</p>
+            </div>
+            <p class="text-xs text-red-400">(Indisponível)</p>
+          </div>
+      
+        </section>
+      
+      
+      
+      
+      
+        <section id="next-screen" class="absolute inset-0 bg-[#2c2c2c] p-6 transition-transform duration-500 translate-x-full z-20 overflow-y-auto flex flex-col gap-8">
+
+          <!-- Botão Voltar -->
+          <button id="back-button" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Voltar
+          </button>
+        
+          <!-- Cabeçalho do App -->
+          <div class="flex flex-col md:flex-row items-start md:items-center gap-6 w-full">
+            <img src="https://img.gta5-mods.com/q75/images/gta-san-andreas-loading-theme/5f42d6-1024x1024bb.jpg" alt="Logo App" class="w-24 h-24 rounded-lg object-cover">
+            <div class="flex flex-col flex-1">
+              <h1 class="text-3xl font-bold text-gray-900 dark:text-white">SA E&E by giulia</h1>
+              <p class="text-gray-600 dark:text-gray-400 mt-2">Multiplayer, Singleplayer, ENB, Mods</p>
+              <div class="flex flex-wrap items-center gap-2 mt-4">
+                <select class="bg-gray-200 dark:bg-[#333333] text-gray-900 dark:text-white text-sm p-2 rounded-md">
+                  <option>Versão 1.1</option>
+                </select>
+                <button class="bg-orange-500 hover:bg-orange-600 text-white font-semibold py-1 px-3 rounded-md">
+                  Baixar
+                </button>
+              </div>
+            </div>
+          </div>
+        
+        </section>
+        
+          
+
+  <div class="w-full">
+    <h2 class="text-xl font-bold text-white mb-4">Galeria</h2>
+    <div class="flex gap-4 overflow-x-auto">
+      <img src="image.png" alt="Screenshot" class="rounded-xl w-80 object-cover flex-shrink-0">
+      <img src="image2.png" alt="Screenshot" class="rounded-xl w-80 object-cover flex-shrink-0">
+      <img src="image3.png" alt="Screenshot" class="rounded-xl w-80 object-cover flex-shrink-0">
+    </div>
+  </div>
+        </section>
+      </div>
+      <script>
+        const saeButton = document.getElementById('saee');
+        const appsSection = document.getElementById('apps-section');
+        const nextScreen = document.getElementById('next-screen');
+      
+        saeButton.addEventListener('click', () => {
+          appsSection.classList.add('-translate-x-full');
+          nextScreen.classList.remove('translate-x-full');
+        });
+      </script>
+      
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giulia Store</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      background-color: #1f1f1f;
+      color: #e5e5e5;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .transition-slide {
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    .translate-x-0 {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    .translate-x-full {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    @media (max-width: 768px) {
+      aside {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="flex">
+
+<aside class="w-60 bg-[#2b2b2b] p-6 flex flex-col space-y-6 h-screen fixed hidden md:flex">
+  <div class="text-2xl font-bold mb-4">Giulia Store</div>
+  <nav class="space-y-2">
+    <a href="#" class="flex items-center gap-2 px-2 py-2 rounded-lg bg-[#3d3d3d]">
+      <img src="https://cdn-icons-png.flaticon.com/512/1040/1040224.png" alt="Explore Icon" class="w-5 h-5">
+      Explorar
+    </a>
+  </nav>
+</aside>
+
+<main class="flex-1 ml-0 md:ml-60 h-screen relative overflow-hidden">
+
+  <section id="explorar-tela" class="absolute inset-0 transition-slide translate-x-0 overflow-y-auto p-4 md:p-8 space-y-8">
+    <div class="bg-gradient-to-r from-indigo-700 via-purple-700 to-green-600 rounded-xl p-6 text-center">
+      <h2 class="text-2xl font-bold">O que há de novo?</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div id="saee" class="bg-[#333333] p-4 rounded-lg flex gap-4 items-center cursor-pointer app-card">
+        <img src="https://img.gta5-mods.com/q75/images/gta-san-andreas-loading-theme/5f42d6-1024x1024bb.jpg" class="w-16 h-16 rounded-lg object-cover">
+        <div>
+          <h2 class="font-semibold text-lg">SA E&E by Giulia</h2>
+          <p class="text-gray-400 text-sm">Multiplayer, Singleplayer, ENB, Mods</p>
+        </div>
+      </div>
+
+      <div id="saee" class="bg-[#333333] p-4 rounded-lg flex gap-4 items-center cursor-pointer app-card">
+        <img src="https://play-lh.googleusercontent.com/ni8VbMJE7RMJUaGO7d3ZS0dsmbGz8P6x7kKYWYe-B3dkRzKnjti28WPqy9yjSqX2DpQ" class="w-16 h-16 rounded-lg object-cover">
+        <div>
+          <h2 class="font-semibold text-lg">VC E&E by Giulia</h2>
+          <p class="text-red-400 text-sm">Indisponível</p>
+        </div>
+      </div>
+
+      <div id="saee" class="bg-[#333333] p-4 rounded-lg flex gap-4 items-center cursor-pointer app-card">
+        <img src="https://play-lh.googleusercontent.com/3gzidHrtPm8yGZfItWHEIYclWTjcOhd4KMf40Igcv3mOW_KD7T_4oh5A_pMb1E5NOrA" class="w-16 h-16 rounded-lg object-cover">
+        <div>
+          <h2 class="font-semibold text-lg">III E&E by Giulia</h2>
+          <p class="text-red-400 text-sm">Indisponível</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="detalhes-tela" class="absolute inset-0 transition-slide translate-x-full overflow-y-auto p-4 md:p-8 space-y-8">
+    <div class="flex items-center gap-2 mb-4">
+      <button id="voltar" class="flex items-center gap-1 text-orange-400 hover:text-orange-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Voltar
+      </button>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-6">
+      <img src="https://img.gta5-mods.com/q75/images/gta-san-andreas-loading-theme/5f42d6-1024x1024bb.jpg" class="w-full md:w-32 h-32 rounded-lg object-cover hidden md:flex">
+      <div class="flex-1 flex flex-col justify-between">
+        <div>
+          <h1 class="text-2xl md:text-3xl font-bold">SA Expanded & Enhanced</h1>
+          <p class="text-gray-400 mt-1">GiuliaMods</p>
+        </div>
+        <button class="mt-4 bg-orange-600 hover:bg-orange-700 text-white py-2 px-6 rounded-lg font-semibold w-full md:w-fit app-card" onclick="window.location.href='https://drive.usercontent.google.com/download?id=13RWQXBJumbVvyefPBPehhuod2cC6rotD&export=download&authuser=0'">
+          Baixar
+        </button>
+      </div>
+    </div>
+
+    <div class="space-y-4 mt-6 rounded-xl">
+      <h2 class="text-2xl font-bold">Preview</h2>
+      <div class="relative">
+        <button id="prevBtn" class="absolute left-2 top-1/2 transform -translate-y-1/2 backdrop-blur-md bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg shadow-md z-30">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        
+        <button id="nextBtn" class="absolute right-2 top-1/2 transform -translate-y-1/2 backdrop-blur-md bg-white/10 hover:bg-white/20 text-white p-2 rounded-lg shadow-md z-30">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        <div id="gallery" class="flex gap-4 overflow-x-auto scroll-smooth rounded-xl">
+          <img src="image.png" alt="Screenshot 1" class="rounded-xl w-72 md:w-96 h-48 md:h-56 object-cover flex-shrink-0">
+          <img src="image2.png" alt="Screenshot 2" class="rounded-xl w-72 md:w-96 h-48 md:h-56 object-cover flex-shrink-0">
+          <img src="image3.png" alt="Screenshot 3" class="rounded-xl w-72 md:w-96 h-48 md:h-56 object-cover flex-shrink-0">
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-2 mt-6">
+      <h2 class="text-2xl font-bold">Descrição</h2>
+      <p class="text-gray-400">
+        O SA E&E é uma experiência aprimorada do GTA San Andreas, trazendo gráficos melhorados, multiplayer e efeitos modernos.
+      </p>
+    </div>
+
+    <div class="space-y-2 mt-6">
+      <h2 class="text-2xl font-bold">Requisitos Mínimos</h2>
+      <p class="text-gray-400">
+        Windows 10/11 • 8GB RAM • 12GB Armazenamento • GTX 1050 ou AMD RX 560
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+window.onload = function() {
+  const explorarTela = document.getElementById('explorar-tela');
+  const detalhesTela = document.getElementById('detalhes-tela');
+  const saee = document.getElementById('saee');
+  const voltar = document.getElementById('voltar');
+
+  saee.addEventListener('click', () => {
+    explorarTela.classList.remove('translate-x-0');
+    explorarTela.classList.add('translate-x-full');
+    detalhesTela.classList.remove('translate-x-full');
+    detalhesTela.classList.add('translate-x-0');
+  });
+
+  voltar.addEventListener('click', () => {
+    detalhesTela.classList.remove('translate-x-0');
+    detalhesTela.classList.add('translate-x-full');
+    explorarTela.classList.remove('translate-x-full');
+    explorarTela.classList.add('translate-x-0');
+  });
+
+  const gallery = document.getElementById('gallery');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  nextBtn.addEventListener('click', () => {
+    gallery.scrollBy({ left: 300, behavior: 'smooth' });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    gallery.scrollBy({ left: -300, behavior: 'smooth' });
+  });
+}
+</script>
+
+</body>
+</html>
