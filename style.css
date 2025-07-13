@@ -1,0 +1,174 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  color: whitesmoke;
+  margin: 0;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 3s ease-in-out;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+
+.navbar {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.1px solid transparent;
+ 
+  backdrop-filter: url(#frosted);
+  -webkit-backdrop-filter: url(#frosted);
+  place-items: center;
+  cursor: pointer;
+  outline: 0;
+  left: 105px;
+  top: 20px;
+  background-image: url(claro.png);
+  background-position: center;
+  background-size: 40px;
+  background-repeat: no-repeat;
+  
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links li {
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links li:hover {
+  color: #ff3c3c;
+}
+
+.profile {
+  width: 40px;
+  height: 40px;
+  background: url('profile.jpg') center/cover;
+  border-radius: 50%;
+}
+
+/* Hero */
+.hero {
+  height: 90vh;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+  margin-top: 80px;
+}
+
+.hero-content {
+  max-width: 600px;
+  
+}
+
+.new-game {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin: 0.5rem 0;
+}
+
+.subtitle {
+  margin-bottom: 1.5rem;
+  color: #ddd;
+}
+
+.view-button {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid #fff;
+  border-radius: 12px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  backdrop-filter: blur(5px) saturate(180%);
+}
+
+.view-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Carousel */
+.carousel {
+  padding: 3rem 5%;
+}
+
+.carousel h2 {
+  margin-bottom: 1rem;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.game-icon {
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 20px;
+  flex: 0 0 auto;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+  transition: transform 0.3s;
+}
+
+.game-icon:hover {
+  transform: scale(1.1);
+}
+.button-container {
+	position: relative;
+  border-radius: 16px;
+}
+
+.baixar {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.1px solid transparent;
+ 
+  backdrop-filter: url(#frosted);
+  -webkit-backdrop-filter: url(#frosted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  outline: 0;
+}
+
+.baixar::before,
+.baixar::after {
+  display: none; /* remove o "+" */
+}
+
+.baixar svg {
+  width: 28px;
+  height: 28px;
+  fill: white;
+}
