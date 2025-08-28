@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GiuliaMods</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+h1 { font-weight: bolder; }
+:root{
+  --card-w: 1100px;
+  --card-h: 900px;
+  --text: #222 bold; 
+  --muted: #606770;
+  --shadow: 0 20px 50px rgba(0,0,0,.2), 0 4px 18px rgba(0,0,0,.1);
+  --radius: 20px;
+}
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  background:#2b2b2b;
+  background-image: url(wallpaper.png);
+  color:var(--text);
+  font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  cursor: none;
+}
+.frame{
+  width:min(92vw, var(--card-w));
+  height:min(80vh, var(--card-h));
+  background:#e4e4e475;
+  backdrop-filter: blur(100px);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  position:relative;
+}
+.track{
+  position:absolute; inset:0;
+  display:flex; 
+  height:100%;
+  transition: transform .6s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.screen{ 
+  flex:0 0 100%; 
+  height:100%; 
+  padding:48px 56px; 
+  box-sizing:border-box; 
+  display:flex; 
+  flex-direction:column; 
+  align-items:center; 
+  text-align:center;
+}
+h1{ font-size:40px; font-weight: bold; margin:0 0 6px; }
+p.lead{ color:var(--muted); margin:0 0 22px; font-weight: 600; }
+.carousel {
+  margin-top:30px;
+  width:800px;
+  height:360px;
+  position:relative;
+  overflow:visible;
+  perspective:1000px;
+}
+.carousel img{
+  position:absolute; top:50%; left:50%;
+  width:480px; height:300px; object-fit:cover;
+  border-radius:12px; box-shadow:0 12px 28px rgba(0,0,0,.28);
+  transition:transform .8s ease, opacity .8s ease, z-index .8s ease;
+  transform: translate(-50%, -50%) scale(.75);
+  opacity:.4; z-index:1;
+}
+.carousel img.center{
+  transform: translate(-50%, -50%) scale(1);
+  opacity:1; z-index:3;
+}
+.carousel img.left{
+  transform: translate(calc(-50% - 280px), -50%) rotateY(16deg) scale(.85);
+  opacity:.8; z-index:2;
+}
+.carousel img.right{
+  transform: translate(calc(-50% + 280px), -50%) rotateY(-16deg) scale(.85);
+  opacity:.8; z-index:2;
+}
+.actions{
+  margin-top:auto; 
+  display:flex; 
+  gap:40px; 
+}
+.navbtn {
+  background:none;
+  border: 5px solid beige;
+  border-radius:50%;
+  width:60px; height:60px;
+  display:flex; align-items:center; justify-content:center;
+  cursor: none;
+  transition: transform .2s, box-shadow .2s;
+}
+.navbtn:hover:not(.disabled) {
+  transform: scale(1.1);
+  box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+.navbtn svg { 
+  width:28px; height:28px; stroke:#fff; stroke-width:3; fill:none; 
+}
+.navbtn span { display:none; }
+.navbtn.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: none;
+}
+.full-image {
+  width: 90%;
+  max-width:900px;
+  height: auto;
+  margin: 20px 0;
+  background-color: #60677033;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.full-image img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.full-image .inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+  align-items: center;
+}
+.full-image .inputs label {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  cursor: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #1a1a1ab0;
+  user-select: none;
+  position: relative;
+}
+.full-image .inputs input[type="radio"] {
+  width: 24px;
+  height: 24px;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid #1a1a1ab0;
+  border-radius: 50%;
+  cursor: none;
+  position: relative;
+  transition: all 0.2s;
+}
+.full-image .inputs input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #1a1a1ab0;
+}
+#custom-cursor {
+  position: fixed;
+  width: 40px;
+  height: 52px;
+  pointer-events: none;
+  z-index: 9999;
+  transform-origin: top left;
+  transition: transform 0.1s ease-out;
+}
+#custom-cursor.enlarged {
+  transform: scale(5.0);
+}
+#three-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  display: none;
+}
+@media (max-width: 900px) {
+  .carousel { width: 90%; height: auto; }
+  .carousel img { width: 80%; height: auto; }
+  .screen { padding: 20px; }
+  .full-image img { width: 120px; height: 120px; }
+}
+</style>
+</head>
+<body>
+<img id="custom-cursor" src="pointer.png" alt="Custom macOS Cursor" />
+<canvas id="three-canvas"></canvas>
+<main class="frame">
+<div id="track" class="track">
+
+<section class="screen">
+<h1>Boas Vindas</h1>
+<p class="lead">Em poucos passos você poderá baixar e instalar o pacote.</p>
+<div class="carousel" id="carousel">
+<img src="image.png" class="center" alt="Imagem 1">
+<img src="image2.png" class="right" alt="Imagem 2">
+<img src="image3.png" class="left" alt="Imagem 3">
+</div>
+<div class="actions">
+<div class="navbtn" id="next1">
+<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</div>
+</div>
+</section>
+
+<section class="screen">
+<h1>Qual versão do pacote você deseja instalar?</h1>
+<p class="lead">A versão lite é recomendada para jogadores mais casuais.</p>
+<div class="full-image">
+<img src="download.png" alt="Imagem explicativa">
+<div class="inputs">
+<label>
+<input type="radio" name="transfer" value="maxi"/>
+<span>Instalar versão máxi do pacote. (22GB)</span>
+</label>
+<label>
+<input type="radio" name="transfer" value="slim"/>
+<span>Instalar versão slim do pacote. (06GB)</span>
+</label>
+</div>
+</div>
+<div class="actions">
+<div class="navbtn" id="back2">
+<svg viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+</div>
+<div class="navbtn disabled" id="next2">
+<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</div>
+</div>
+</section>
+
+<section class="screen">
+<h1>Obrigada</h1>
+<p class="lead">O pacote está pronto para download.</p>
+<div class="full-image">
+<h1>Sobre o Pacote</h1>
+<p class="lead">O SA E&E é uma experiência aprimorada do GTA San Andreas, trazendo gráficos atualizados, multiplayer e efeitos modernos.</p>
+<h1 id="requirements-title">Requisitos Mínimos</h1>
+<p class="lead" id="requirements-text">• Windows 10/11 • 8GB RAM • 22GB Armazenamento • GTX 1050 ou AMD RX 560 </p>
+<h1>O que será feito?</h1>
+<p class="lead" id="action-lead">Instalação limpa do pacote.</p>
+<div class="actions">
+<div class="navbtn" id="finish">
+<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</main>
+
+<script>
+const track = document.getElementById('track');
+const carousel = document.getElementById('carousel');
+let step = 0;
+
+const customCursor = document.getElementById('custom-cursor');
+let lastX = 0, lastY = 0, lastTime = 0;
+
+document.addEventListener('mousemove', (e) => {
+  const currentTime = Date.now();
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  const dt = currentTime - lastTime;
+  const speed = Math.sqrt(dx * dx + dy * dy) / dt;
+
+  customCursor.style.left = `${e.clientX}px`;
+  customCursor.style.top = `${e.clientY}px`;
+
+  if (speed > 2.0) {
+    customCursor.classList.add('enlarged');
+  } else {
+    customCursor.classList.remove('enlarged');
+  }
+
+  lastX = e.clientX;
+  lastY = e.clientY;
+  lastTime = currentTime;
+});
+
+function go(n){
+  step = Math.max(0, Math.min(2, n));
+  track.style.transform = `translateX(${-step*100}%)`;
+  if(step === 0){
+    carousel.style.display = 'block';
+  } else {
+    carousel.style.display = 'none';
+  }
+}
+
+document.getElementById('next1').onclick = () => go(1);
+document.getElementById('back2').onclick = () => go(0);
+
+const next2Btn = document.getElementById('next2');
+const transferRadios = document.querySelectorAll('input[name="transfer"]');
+const leadText = document.getElementById('action-lead');
+const requirementsTitle = document.getElementById('requirements-title');
+const requirementsText = document.getElementById('requirements-text');
+
+transferRadios.forEach(radio => {
+  radio.checked = false; 
+  radio.addEventListener('change', () => {
+    next2Btn.classList.remove('disabled'); 
+  });
+  radio.addEventListener('mouseenter', () => {
+    customCursor.src = 'cursor.png';
+  });
+  radio.addEventListener('mouseleave', () => {
+    customCursor.src = 'pointer.png';
+  });
+});
+
+next2Btn.addEventListener('mouseenter', () => {
+  if (!next2Btn.classList.contains('disabled')) {
+    customCursor.src = 'cursor.png';
+  }
+});
+next2Btn.addEventListener('mouseleave', () => {
+  customCursor.src = 'pointer.png';
+});
+
+next2Btn.onclick = () => {
+  if(next2Btn.classList.contains('disabled')) return;
+
+  const selected = Array.from(transferRadios).find(r => r.checked);
+  if(selected && selected.value === 'maxi'){
+    leadText.textContent = 'Instalação da versão máxi do pacote.';
+    requirementsTitle.style.display = 'block';
+    requirementsText.style.display = 'block';
+  } else {
+    leadText.textContent = 'Instalação da versão slim do pacote.';
+    requirementsTitle.style.display = 'none';
+    requirementsText.style.display = 'none';
+  }
+
+  go(2);
+};
+
+document.getElementById('finish').onclick = () => {
+  const selected = Array.from(transferRadios).find(r => r.checked);
+  if(selected && selected.value === 'maxi'){
+    window.open('https://drive.usercontent.google.com/download?id=1KP8Xv-7m0cFpuiEuJnSBhDhfjykBcVR6&export=download&authuser=0', '_blank');
+  } else {
+    window.open('https://drive.usercontent.google.com/download?id=1H2Vk1Ysym1BuEW-W7lGMWYBu67Ua0jvV&export=download&authuser=0', '_blank');
+  }
+};
+
+const imgs = document.querySelectorAll('#carousel img');
+let idx = 0;
+
+function renderCarousel(){
+  imgs.forEach(img => img.className = '');
+  const total = imgs.length;
+  const left = (idx - 1 + total) % total;
+  const right = (idx + 1) % total;
+  imgs[idx].classList.add('center');
+  imgs[left].classList.add('left');
+  imgs[right].classList.add('right');
+}
+
+setInterval(() => {
+  idx = (idx + 1) % imgs.length;
+  renderCarousel();
+}, 5000);
+
+const navButtons = document.querySelectorAll('.navbtn:not(.disabled)');
+navButtons.forEach(button => {
+  button.addEventListener('mouseenter', () => {
+    customCursor.src = 'cursor.png';
+  });
+  button.addEventListener('mouseleave', () => {
+    customCursor.src = 'pointer.png';
+  });
+});
+
+renderCarousel();
+
+
+let isCubeMode = false;
+const canvas = document.getElementById('three-canvas');
+const mainFrame = document.querySelector('.frame');
+let scene, camera, renderer, cubes = [], stars = [];
+
+function initThreeJS() {
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  
+  scene.background = new THREE.Color(0x000000);
+
+  
+  const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+  const cubeMaterial = new THREE.MeshStandardMaterial({
+    color: 0xffffff,
+    metalness: 0.7,
+    roughness: 0.2
+  });
+
+  for (let i = 0; i < 50; i++) {
+    const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    cube.position.set(
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 20,
+      (Math.random() - 0.5) * 20
+    );
+    cube.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+    cube.userData = {
+      rotationSpeed: new THREE.Vector3(
+        (Math.random() - 0.5) * 0.02,
+        (Math.random() - 0.5) * 0.02,
+        (Math.random() - 0.5) * 0.02
+      )
+    };
+    scene.add(cube);
+    cubes.push(cube);
+  }
+
+  
+  const starGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+  const starMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  for (let i = 0; i < 1000; i++) {
+    const star = new THREE.Mesh(starGeometry, starMaterial);
+    star.position.set(
+      (Math.random() - 0.5) * 100,
+      (Math.random() - 0.5) * 100,
+      (Math.random() - 0.5) * 100
+    );
+    scene.add(star);
+    stars.push(star);
+  }
+
+  
+  const ambientLight = new THREE.AmbientLight(0x404040);
+  scene.add(ambientLight);
+  const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+  pointLight.position.set(10, 10, 10);
+  scene.add(pointLight);
+
+  camera.position.z = 15;
+}
+
+function animate() {
+  if (!isCubeMode) return;
+
+  requestAnimationFrame(animate);
+  cubes.forEach(cube => {
+    cube.rotation.x += cube.userData.rotationSpeed.x;
+    cube.rotation.y += cube.userData.rotationSpeed.y;
+    cube.rotation.z += cube.userData.rotationSpeed.z;
+  });
+  renderer.render(scene, camera);
+}
+
+function toggleCubeMode() {
+  isCubeMode = !isCubeMode;
+  if (isCubeMode) {
+    canvas.style.display = 'block';
+    mainFrame.style.display = 'none';
+    customCursor.style.display = 'none';
+    initThreeJS();
+    animate();
+  } else {
+    canvas.style.display = 'none';
+    mainFrame.style.display = 'block';
+    customCursor.style.display = 'block';
+    renderer.dispose();
+  }
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'h') {
+    toggleCubeMode();
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (isCubeMode) {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+});
+</script>
+</body>
+</html>
